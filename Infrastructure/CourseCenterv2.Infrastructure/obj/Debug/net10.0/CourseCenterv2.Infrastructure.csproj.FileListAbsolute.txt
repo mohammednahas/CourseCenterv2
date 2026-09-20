@@ -19,3 +19,4 @@
 /Users/na7as/Projects/CourseCenterv2/Infrastructure/CourseCenterv2.Infrastructure/obj/Debug/net10.0/CourseCenterv2.Infrastructure.pdb
 /Users/na7as/Projects/CourseCenterv2/Infrastructure/CourseCenterv2.Infrastructure/obj/Debug/net10.0/CourseCenterv2.Infrastructure.genruntimeconfig.cache
 /Users/na7as/Projects/CourseCenterv2/Infrastructure/CourseCenterv2.Infrastructure/obj/Debug/net10.0/ref/CourseCenterv2.Infrastructure.dll
+/Users/na7as/Projects/CourseCenterv2/Infrastructure/CourseCenterv2.Infrastructure/obj/Debug/net10.0/CourseCenterv2.Infrastructure.sourcelink.json

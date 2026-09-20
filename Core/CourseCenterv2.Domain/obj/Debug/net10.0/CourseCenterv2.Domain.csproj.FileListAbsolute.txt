@@ -9,3 +9,4 @@
 /Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Domain/obj/Debug/net10.0/refint/CourseCenterv2.Domain.dll
 /Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Domain/obj/Debug/net10.0/CourseCenterv2.Domain.pdb
 /Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Domain/obj/Debug/net10.0/ref/CourseCenterv2.Domain.dll
+/Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Domain/obj/Debug/net10.0/CourseCenterv2.Domain.sourcelink.json

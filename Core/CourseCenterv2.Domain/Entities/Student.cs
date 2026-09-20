@@ -5,8 +5,8 @@ namespace CourseCenterv2.Domain.Entities
         public int Id { private set; get; }
         public string Name { private set; get; }
 
-        private readonly List<Enrollment> _enrollments = new();
-        public IReadOnlyCollection<Enrollment> Enrollments => _enrollments.AsReadOnly();
+        public virtual ICollection<Enrollment> Enrollments { get; private set; }
+    = new List<Enrollment>();
 
         private Student()
         {
@@ -31,7 +31,7 @@ namespace CourseCenterv2.Domain.Entities
         public Enrollment EnrollIn(Course course)
         {
             var enrollment = new Enrollment(this, course);
-            _enrollments.Add(enrollment);
+            Enrollments.Add(enrollment);
             course.AddEnrollment(enrollment);
             return enrollment;
 

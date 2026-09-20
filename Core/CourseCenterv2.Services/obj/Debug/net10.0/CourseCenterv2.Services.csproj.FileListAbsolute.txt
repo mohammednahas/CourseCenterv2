@@ -15,3 +15,6 @@
 /Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Services/obj/Debug/net10.0/refint/CourseCenterv2.Services.dll
 /Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Services/obj/Debug/net10.0/CourseCenterv2.Services.pdb
 /Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Services/obj/Debug/net10.0/ref/CourseCenterv2.Services.dll
+/Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Services/bin/Debug/net10.0/CourseCenterv2.Services.runtimeconfig.json
+/Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Services/obj/Debug/net10.0/CourseCenterv2.Services.sourcelink.json
+/Users/na7as/Projects/CourseCenterv2/Core/CourseCenterv2.Services/obj/Debug/net10.0/CourseCenterv2.Services.genruntimeconfig.cache
