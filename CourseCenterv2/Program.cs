@@ -1,34 +1,29 @@
 using CourseCenterv2.Application.Interfaces;
 using CourseCenterv2.Infrastructure.Data;
-
-
 using CourseCenterv2.Infrastructure.Repositories;
 using CourseCenterv2.Services;
-
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// MVC
+// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // EF Core + PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")
-    )
+    ));
+
+// Generic Repository
+builder.Services.AddScoped(
+    typeof(IGenericRepository<>),
+    typeof(GenericRepository<>)
 );
 
-// Student
-builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+// Services
 builder.Services.AddScoped<IStudentService, StudentService>();
-
-// Course
-builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ICourseService, CourseService>();
-
-// Enrollment
-builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 
 var app = builder.Build();
 
@@ -40,7 +35,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
 app.UseRouting();
