@@ -177,3 +177,6 @@
 /Users/na7as/Projects/CourseCenterv2/CourseCenterv2/obj/Debug/net10.0/CourseCenterv2.pdb
 /Users/na7as/Projects/CourseCenterv2/CourseCenterv2/obj/Debug/net10.0/CourseCenterv2.genruntimeconfig.cache
 /Users/na7as/Projects/CourseCenterv2/CourseCenterv2/obj/Debug/net10.0/ref/CourseCenterv2.dll
+/Users/na7as/Projects/CourseCenterv2/CourseCenterv2/bin/Debug/net10.0/Castle.Core.dll
+/Users/na7as/Projects/CourseCenterv2/CourseCenterv2/bin/Debug/net10.0/Microsoft.EntityFrameworkCore.Proxies.dll
+/Users/na7as/Projects/CourseCenterv2/CourseCenterv2/obj/Debug/net10.0/CourseCenterv2.sourcelink.json

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "EGcYjkII40c=",
+  "dgSpecHash": "mi8Joq3/n/c=",
   "success": true,
   "projectFilePath": "/Users/na7as/Projects/CourseCenterv2/Infrastructure/CourseCenterv2.Infrastructure/CourseCenterv2.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "/Users/na7as/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
     "/Users/na7as/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.bcl.asyncinterfaces/6.0.0/microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.3/microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
@@ -15,6 +16,7 @@
     "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.0/microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.0/microsoft.entityframeworkcore.analyzers.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.design/8.0.0/microsoft.entityframeworkcore.design.8.0.0.nupkg.sha512",
+    "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.proxies/8.0.0/microsoft.entityframeworkcore.proxies.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.0/microsoft.entityframeworkcore.relational.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.extensions.caching.memory/8.0.0/microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
@@ -35,7 +37,8 @@
     "/Users/na7as/.nuget/packages/system.composition.convention/6.0.0/system.composition.convention.6.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/system.composition.hosting/6.0.0/system.composition.hosting.6.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/system.composition.runtime/6.0.0/system.composition.runtime.6.0.0.nupkg.sha512",
-    "/Users/na7as/.nuget/packages/system.composition.typedparts/6.0.0/system.composition.typedparts.6.0.0.nupkg.sha512"
+    "/Users/na7as/.nuget/packages/system.composition.typedparts/6.0.0/system.composition.typedparts.6.0.0.nupkg.sha512",
+    "/Users/na7as/.nuget/packages/system.diagnostics.eventlog/6.0.0/system.diagnostics.eventlog.6.0.0.nupkg.sha512"
   ],
   "logs": [
     {

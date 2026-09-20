@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "lszhM8gWStU=",
+  "dgSpecHash": "wqr3ZAdDjgo=",
   "success": true,
   "projectFilePath": "/Users/na7as/Projects/CourseCenterv2/CourseCenterv2/CourseCenterv2.csproj",
   "expectedPackageFiles": [
+    "/Users/na7as/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
     "/Users/na7as/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.bcl.asyncinterfaces/6.0.0/microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.3/microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
@@ -15,6 +16,7 @@
     "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.0/microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.0/microsoft.entityframeworkcore.analyzers.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.design/8.0.0/microsoft.entityframeworkcore.design.8.0.0.nupkg.sha512",
+    "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.proxies/8.0.0/microsoft.entityframeworkcore.proxies.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.0/microsoft.entityframeworkcore.relational.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/microsoft.extensions.dependencymodel/8.0.0/microsoft.extensions.dependencymodel.8.0.0.nupkg.sha512",
     "/Users/na7as/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",

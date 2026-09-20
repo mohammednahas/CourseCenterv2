@@ -12,6 +12,7 @@ namespace CourseCenterv2.Application.Interfaces
         Task UpdateAsync(Student student);
 
         Task DeleteAsync(Student student);
+        IQueryable<Student> Query();
 
     }
 }
