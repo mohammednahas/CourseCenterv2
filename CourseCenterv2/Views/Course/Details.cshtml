@@ -1,0 +1,108 @@
+@model CourseCenterv2.Domain.Entities.Course
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h1 class="fw-bold mb-1">
+            Course Details
+        </h1>
+
+        <p class="text-muted mb-0">
+            View course information.
+        </p>
+    </div>
+
+    <a asp-action="Index"
+       class="btn btn-light border">
+        ← Back to Courses
+    </a>
+
+</div>
+
+<div class="row g-4">
+
+    <div class="col-md-8">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body p-4">
+
+                <div class="mb-4">
+
+                    <small class="text-muted">
+                        COURSE ID
+                    </small>
+
+                    <h3 class="fw-bold">
+                        #@Model.Id
+                    </h3>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <small class="text-muted">
+                        TITLE
+                    </small>
+
+                    <h2 class="fw-bold">
+                        @Model.Title
+                    </h2>
+
+                </div>
+
+                <div>
+
+                    <small class="text-muted">
+                        CAPACITY
+                    </small>
+
+                    <h4>
+                        @Model.Capacity students
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body p-4">
+
+                <h5 class="fw-bold">
+                    Enrollment
+                </h5>
+
+                <p class="text-muted">
+                    The list of enrolled students will be
+                    displayed here after relationship loading
+                    is implemented.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="mt-4">
+
+    <a asp-action="Edit"
+       asp-route-id="@Model.Id"
+       class="btn btn-primary">
+        Edit Course
+    </a>
+
+</div>

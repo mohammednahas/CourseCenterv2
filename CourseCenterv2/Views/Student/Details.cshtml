@@ -1,0 +1,260 @@
+cshtml
+@model CourseCenterv2.Application.ViewModels.StudentDetailsViewModel
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<div class="container py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold mb-1">Student Details</h1>
+            <p class="text-muted mb-0">
+                View student information and manage course enrollment.
+            </p>
+        </div>
+
+        <a asp-action="Index"
+           class="btn btn-light border">
+            ← Back to Students
+        </a>
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- Student Information -->
+        <div class="col-lg-5">
+
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+
+                    <div class="d-flex align-items-center mb-4">
+
+                        <div class="bg-primary text-white rounded-circle
+                                    d-flex align-items-center justify-content-center"
+                             style="width: 60px; height: 60px;">
+
+                            <span class="fs-4 fw-bold">
+                                @Model.Student.Name.Substring(0, 1).ToUpper()
+                            </span>
+
+                        </div>
+
+                        <div class="ms-3">
+                            <h4 class="fw-bold mb-1">
+                                @Model.Student.Name
+                            </h4>
+
+                            <span class="text-muted">
+                                Student #@Model.Student.Id
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <hr />
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">
+                            STUDENT ID
+                        </small>
+
+                        <span class="fw-semibold">
+                            #@Model.Student.Id
+                        </span>
+                    </div>
+
+                    <div>
+                        <small class="text-muted d-block">
+                            NAME
+                        </small>
+
+                        <span class="fw-semibold">
+                            @Model.Student.Name
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Enroll Student -->
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4">
+
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-1">
+                            Enroll in a Course
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Select a course to enroll this student.
+                        </p>
+                    </div>
+
+                    <form asp-action="Enroll"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               name="studentId"
+                               value="@Model.Student.Id" />
+
+                        <div class="mb-3">
+
+                            <label for="courseId"
+                                   class="form-label fw-semibold">
+                                Course
+                            </label>
+
+                            <select id="courseId"
+                                    name="courseId"
+                                    class="form-select"
+                                    required>
+
+                                <option value="">
+                                    -- Select a course --
+                                </option>
+
+                                @foreach (var course in Model.Courses)
+                                {
+                                    <option value="@course.Id">
+                                        @course.Title
+                                    </option>
+                                }
+
+                            </select>
+
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Enroll Student
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Enrolled Courses -->
+    <div class="card border-0 shadow-sm mt-4">
+
+        <div class="card-body p-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        Enrolled Courses
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Courses currently assigned to this student.
+                    </p>
+                </div>
+
+                <span class="badge bg-primary rounded-pill px-3 py-2">
+                    @Model.Student.Enrollments.Count
+                    @(Model.Student.Enrollments.Count == 1 ? "Course" : "Courses")
+                </span>
+
+            </div>
+
+
+            @if (!Model.Student.Enrollments.Any())
+            {
+                <div class="text-center py-5">
+
+                    <div class="mb-3">
+                        <span class="fs-1">📚</span>
+                    </div>
+
+                    <h6 class="fw-bold">
+                        No courses yet
+                    </h6>
+
+                    <p class="text-muted mb-0">
+                        This student is not enrolled in any course.
+                    </p>
+
+                </div>
+            }
+            else
+            {
+                <div class="row g-3">
+
+                    @foreach (var enrollment in Model.Student.Enrollments)
+                    {
+                        <div class="col-md-6 col-xl-4">
+
+                            <div class="border rounded-3 p-3 h-100">
+
+                                <div class="d-flex justify-content-between
+                                            align-items-start mb-3">
+
+                                    <div>
+                                        <h6 class="fw-bold mb-1">
+                                            @enrollment.Course.Title
+                                        </h6>
+
+                                        <small class="text-muted">
+                                            Course #@enrollment.Course.Id
+                                        </small>
+                                    </div>
+
+                                    <span class="badge bg-success">
+                                        Enrolled
+                                    </span>
+
+                                </div>
+
+                                <div class="text-muted small">
+                                    <strong>Enrolled:</strong>
+                                    @enrollment.EnrolledAt
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- Actions -->
+    <div class="d-flex gap-2 mt-4">
+
+        <a asp-action="Edit"
+           asp-route-id="@Model.Student.Id"
+           class="btn btn-primary">
+            Edit Student
+        </a>
+
+        <a asp-action="Index"
+           class="btn btn-light border">
+            Back to Students
+        </a>
+
+    </div>
+
+</div>
+
