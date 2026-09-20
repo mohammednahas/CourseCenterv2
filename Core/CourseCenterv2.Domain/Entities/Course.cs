@@ -1,82 +1,78 @@
-namespace CourseCenterv2.Domain.Entities
+namespace CourseCenterv2.Domain.Entities;
+
+public class Course
 {
-    public class Course
+    private readonly List<Enrollment> _enrollments = new();
+
+    public int Id { get; private set; }
+    public string Title { get; private set; }
+    public int Capacity { get; private set; }
+
+    public virtual IReadOnlyCollection<Enrollment> Enrollments
+        => _enrollments.AsReadOnly();
+
+    protected Course()
     {
-        public int Id{private set;get;}
+        // Required by EF Core and Lazy Loading Proxy
+    }
 
-        public String Title {private set;get;}
+    public Course(string title, int capacity)
+    {
+        SetTitle(title);
+        SetCapacity(capacity);
+    }
 
-        public int Capacity {private set;get;}
+    public void ChangeTitle(string title)
+    {
+        SetTitle(title);
+    }
 
-        private readonly List<Enrollment> _enrollments=new();
-        public IReadOnlyCollection<Enrollment> Enrollments=>_enrollments.AsReadOnly();
+    public void ChangeCapacity(int capacity)
+    {
+        if (capacity <= 0)
+            throw new ArgumentException(
+                "Capacity must be greater than zero.",
+                nameof(capacity));
 
-        private Course()
-        {
-            
-        }
-        public Course(string title, int capacity)
-        {
-            SetTitle(title);
-            SetCapacity(capacity);
+        if (capacity < _enrollments.Count)
+            throw new InvalidOperationException(
+                "Capacity cannot be less than current enrollment count.");
 
-        }
-        public void ChangeTitle(string title)
-        {
-            SetTitle(title);
-        }
+        Capacity = capacity;
+    }
 
-        public void SetTitle(string title)
-        {
-            Title=title.Trim();
-        }
+    public bool HasAvailableSeat()
+    {
+        return _enrollments.Count < Capacity;
+    }
 
-        public void ChangeCapacity(int capacity)
-        {
-            if (capacity <= 0)
-            {
-                throw new ArgumentException(
-                    "Capacity must be greater than 0 ",nameof(capacity)
-                );
-            }
+    internal void AddEnrollment(Enrollment enrollment)
+    {
+        ArgumentNullException.ThrowIfNull(enrollment);
 
-            if (capacity < _enrollments.Count())
-            {
-                throw new InvalidOperationException(
-                    "this cours if full"
-                );
-                
-            }
+        if (_enrollments.Any(e => e.Id == enrollment.Id))
+            return;
 
-            Capacity=capacity;
-        }
+        _enrollments.Add(enrollment);
+    }
 
-        public bool HasSeat()
-        {
-            return _enrollments.Count()<= Capacity;
-        }
+    private void SetTitle(string title)
+    {
+        if (string.IsNullOrWhiteSpace(title))
+            throw new ArgumentException(
+                "Course title is required.",
+                nameof(title));
 
-        internal void AddEnrollment(Enrollment enrollment)
-        {
-            ArgumentNullException.ThrowIfNull(enrollment);
+        Title = title.Trim();
+    }
 
-            _enrollments.Add(enrollment);
-        }
+    private void SetCapacity(int capacity)
+    {
+        if (capacity <= 0)
+            throw new ArgumentException(
+                "Capacity must be greater than zero.",
+                nameof(capacity));
 
-        public void SetCapacity(int capacity)
-        {
-            if (capacity <= 0)
-            {
-                throw new ArgumentException(
-                    "Capacity must be greater than 0 ",nameof(capacity)
-                );
-            }
-            Capacity=capacity;
-
-            
-        }
-
-
-
+        Capacity = capacity;
     }
 }

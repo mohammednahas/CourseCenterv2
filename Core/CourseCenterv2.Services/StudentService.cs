@@ -82,9 +82,7 @@ public class StudentService : IStudentService
     public async Task<Student?> GetByIdAsync(int id)
     {
         return await _studentRepository
-            .Query().Include(e => e.Enrollments).
-            ThenInclude(c => c.Course)
-            .AsNoTracking()
+            .Query()
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
