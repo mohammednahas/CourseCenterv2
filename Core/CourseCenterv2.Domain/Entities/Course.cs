@@ -8,6 +8,8 @@ public class Course
     public string Title { get; private set; }
     public int Capacity { get; private set; }
 
+    public uint Version {get; private set;}
+
     public virtual IReadOnlyCollection<Enrollment> Enrollments
         => _enrollments.AsReadOnly();
 
@@ -25,6 +27,7 @@ public class Course
     public void ChangeTitle(string title)
     {
         SetTitle(title);
+       
     }
 
     public void ChangeCapacity(int capacity)
@@ -39,6 +42,7 @@ public class Course
                 "Capacity cannot be less than current enrollment count.");
 
         Capacity = capacity;
+       
     }
 
     public bool HasAvailableSeat()
@@ -75,4 +79,6 @@ public class Course
 
         Capacity = capacity;
     }
+
+    
 }

@@ -85,5 +85,61 @@ namespace CourseCenterv2.Services
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task AddPrefix()
+        {
+            await _courseRepository
+            .Query()
+            .Where(s => s.Title.Contains("Programming"))
+            .ExecuteUpdateAsync(U =>
+             U.SetProperty(
+                c => c.Title, c => "Advanced " + c.Title)
+
+            );
+
+        }
+        public async Task DeleteProgrammingcourses()
+        {
+            await _courseRepository
+            .Query()
+            .Where(s => s.Title.Contains("Programming"))
+            .ExecuteDeleteAsync();
+
+        }
+
+        public async Task UpdateAsync(int id, string title, int capacity, uint version)
+        {
+            var course = await _courseRepository
+                .Query()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (course is null)
+            {
+                throw new InvalidOperationException(
+                    "This Course not found");
+            }
+
+            course.ChangeTitle(title);
+            course.ChangeCapacity(capacity);
+
+            var newVersion = version+1;
+
+            var affectedRows = await _courseRepository
+                .Query()
+                .Where(x =>
+                    x.Id == id &&
+                    x.Version == version)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(x => x.Title, title)
+                    .SetProperty(x => x.Capacity, capacity)
+                    .SetProperty(x => x.Version, newVersion));
+
+            if (affectedRows == 0)
+            {
+                throw new DbUpdateConcurrencyException(
+                    "The course was modified by another user.");
+            }
+        }
+
     }
 }
