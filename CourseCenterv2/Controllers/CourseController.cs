@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseCenterv2.Controllers
 {
@@ -8,17 +9,17 @@ namespace CourseCenterv2.Controllers
 
         public CourseController(ICourseService courseService)
         {
-            _courseService=courseService;
+            _courseService = courseService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var courses= await _courseService.GetAllAsync();
+            var courses = await _courseService.GetAllAsync();
             return View(courses);
-            
+
         }
 
-        public async Task<IActionResult> Details (int id)
+        public async Task<IActionResult> Details(int id)
         {
             var course = await _courseService.GetByIdAsync(id);
             return View(course);
@@ -32,9 +33,9 @@ namespace CourseCenterv2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult>Create(string title,int capacity)
+        public async Task<IActionResult> Create(string title, int capacity)
         {
-            await _courseService.CreateAsync(title,capacity);
+            await _courseService.CreateAsync(title, capacity);
             return RedirectToAction(nameof(Index));
         }
 
@@ -42,27 +43,71 @@ namespace CourseCenterv2.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var course =await _courseService.GetByIdAsync(id);
+            var course = await _courseService.GetByIdAsync(id);
             return View(course);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-       public async Task<IActionResult> Edit(int id,String title,int capacity)
+
+        public async Task<IActionResult> Edit(
+    int id,
+    string title,
+    int capacity,
+    uint version)
         {
-            await _courseService.ChangeCapacityAsync(id,capacity);
-            await _courseService.ChangeTitleAsync(id,title);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _courseService.UpdateAsync(
+                    id,
+                    title,
+                    capacity,
+                    version);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                var course = await _courseService.GetByIdAsync(id);
+
+                if (course is null)
+                {
+                    return NotFound();
+                }
+
+                ModelState.AddModelError(
+                    string.Empty,
+                    "This course was modified by another user. Your changes were not saved.");
+
+                return View(course);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task <IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _courseService.DeleteAsync(id);
-             return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPrefix()
+        {
+            await _courseService.AddPrefix();
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteProgrammingCourses()
+        {
+            await _courseService.DeleteProgrammingcourses();
+            return RedirectToAction(nameof(Index));
 
         }
 

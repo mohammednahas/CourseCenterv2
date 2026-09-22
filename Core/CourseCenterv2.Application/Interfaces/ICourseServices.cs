@@ -8,7 +8,13 @@ public interface ICourseService
     Task ChangeTitleAsync(int id, string Title);
     Task ChangeCapacityAsync(int id, int capacity);
 
+    Task AddPrefix();
+
+    Task DeleteProgrammingcourses();
     Task DeleteAsync(int id);
+
+    Task UpdateAsync(int id, string title, int capacity,  uint version);
+   
 
 
 

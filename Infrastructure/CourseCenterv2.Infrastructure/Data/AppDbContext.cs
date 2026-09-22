@@ -32,6 +32,8 @@ namespace CourseCenterv2.Infrastructure.Data
 
                entity.Property(x => x.Capacity).IsRequired();
 
+               entity.Property(x=>x.Version).IsConcurrencyToken();
+
 
            }
            );
