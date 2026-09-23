@@ -23,9 +23,35 @@ ViewData["Title"] = "Edit Course";
 
             <form asp-action="Edit" method="post">
 
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-warning">
+
+            <div class="mb-2">
+                <strong>Concurrency conflict</strong>
+            </div>
+
+            <div>
+                This course was modified by another user.
+                Your changes were not saved.
+            </div>
+
+            <a asp-controller="Course"
+           asp-action="Index"
+           class="btn btn-warning mt-3">
+            Reload
+        </a>
+
+        </div>
+    }
+
                 <input type="hidden"
                        name="id"
                        value="@Model.Id" />
+
+                       <input type="hidden"
+       name="version"
+       value="@Model.Version" />
 
                 <div class="mb-4">
 

@@ -1,40 +1,55 @@
-namespace CourseCenterv2.Domain.Entities
+namespace CourseCenterv2.Domain.Entities;
+
+public class Student
 {
-    public class Student
+    private readonly List<Enrollment> _enrollments = new();
+
+    public int Id { get; private set; }
+    public string Name { get; private set; }
+
+    public virtual IReadOnlyCollection<Enrollment> Enrollments
+        => _enrollments.AsReadOnly();
+
+    protected Student()
     {
-        public int Id { private set; get; }
-        public string Name { private set; get; }
+        // Required by EF Core and Lazy Loading Proxy
+    }
 
-        public virtual ICollection<Enrollment> Enrollments { get; private set; }
-    = new List<Enrollment>();
+    public Student(string name)
+    {
+        SetName(name);
+    }
 
-        private Student()
-        {
+    public void Rename(string name)
+    {
+        SetName(name);
+    }
 
-        }
+    public Enrollment EnrollIn(Course course)
+    {
+        ArgumentNullException.ThrowIfNull(course);
 
-        public Student(String name)
-        {
-            SetName(name);
-        }
+        if (_enrollments.Any(e => e.CourseId == course.Id))
+            throw new InvalidOperationException(
+                "Student is already enrolled in this course.");
 
-        public void SetName(String name)
-        {
-            Name = name.Trim();
-        }
+        
 
-        public void Rename(String name)
-        {
-            SetName(name);
-        }
+        var enrollment = new Enrollment(this, course);
 
-        public Enrollment EnrollIn(Course course)
-        {
-            var enrollment = new Enrollment(this, course);
-            Enrollments.Add(enrollment);
-            course.AddEnrollment(enrollment);
-            return enrollment;
+        _enrollments.Add(enrollment);
+        course.AddEnrollment(enrollment);
 
-        }
+        return enrollment;
+    }
+
+    private void SetName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException(
+                "Student name is required.",
+                nameof(name));
+
+        Name = name.Trim();
     }
 }

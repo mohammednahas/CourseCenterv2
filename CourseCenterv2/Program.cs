@@ -11,10 +11,11 @@ builder.Services.AddControllersWithViews();
 
 // EF Core + PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    ));
-
+    options
+        .UseLazyLoadingProxies()
+        .UseNpgsql(
+            builder.Configuration.GetConnectionString("DefaultConnection")
+        ));
 // Generic Repository
 builder.Services.AddScoped(
     typeof(IGenericRepository<>),
@@ -43,6 +44,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Student}/{action=Index}/{id?}");
 
 app.Run();

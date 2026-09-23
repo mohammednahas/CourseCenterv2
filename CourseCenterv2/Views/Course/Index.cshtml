@@ -1,3 +1,4 @@
+
 @model IReadOnlyList<CourseCenterv2.Domain.Entities.Course>
 
 @{
@@ -14,10 +15,41 @@
         </p>
     </div>
 
-    <a asp-action="Create"
-       class="btn btn-primary">
-        + Add Course
+    <div class="d-flex gap-2">
+
+        <a asp-action="Create"
+           class="btn btn-primary">
+            + Add Course
+        </a>
+
+        <form asp-action="AddPrefix"
+              method="post"
+              class="d-inline">
+
+            <button type="submit"
+                    class="btn btn-warning">
+                Add Advanced to Programming
+            </button>
+
+        </form>
+
+        <form asp-action="DeleteProgrammingCourses"
+              method="post"
+              class="d-inline">
+
+            <button type="submit"
+                    class="btn btn-warning">
+                Delete Programming Course
+            </button>
+
+        </form>
+
+        <a asp-controller="Student" asp-action="Index" class="btn btn-primary">
+        Go to students
     </a>
+
+
+    </div>
 
 </div>
 
@@ -131,3 +163,4 @@ else
 
     </div>
 }
+
