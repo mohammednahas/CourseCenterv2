@@ -7,6 +7,8 @@ public class Student
     public int Id { get; private set; }
     public string Name { get; private set; }
 
+    public string Email { get; set; }
+
     public virtual IReadOnlyCollection<Enrollment> Enrollments
         => _enrollments.AsReadOnly();
 
