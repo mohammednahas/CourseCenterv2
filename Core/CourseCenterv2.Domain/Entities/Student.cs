@@ -17,14 +17,20 @@ public class Student
         // Required by EF Core and Lazy Loading Proxy
     }
 
-    public Student(string name)
+    public Student(string name, string email)
     {
         SetName(name);
+        SetEmail(email);
     }
 
     public void Rename(string name)
     {
         SetName(name);
+    }
+
+    public void ChangeEmail(string email)
+    {
+        SetEmail(email);
     }
 
     public Enrollment EnrollIn(Course course)
@@ -34,8 +40,6 @@ public class Student
         if (_enrollments.Any(e => e.CourseId == course.Id))
             throw new InvalidOperationException(
                 "Student is already enrolled in this course.");
-
-        
 
         var enrollment = new Enrollment(this, course);
 
@@ -53,5 +57,15 @@ public class Student
                 nameof(name));
 
         Name = name.Trim();
+    }
+
+    private void SetEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            throw new ArgumentException(
+                "Student email is required.",
+                nameof(email));
+
+        Email = email.Trim();
     }
 }
