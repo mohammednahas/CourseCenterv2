@@ -20,9 +20,9 @@ public class StudentService : IStudentService
         _enrollmentRepository = enrollmentRepository;
     }
 
-    public async Task CreateAsync(string name)
+    public async Task CreateAsync(string name, string email)
     {
-        var student = new Student(name);
+        var student = new Student(name, email);
 
         await _studentRepository.AddAsync(student);
         await _studentRepository.SaveChangesAsync();
@@ -86,7 +86,7 @@ public class StudentService : IStudentService
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task RenameAsync(int id, string newName)
+    public async Task RenameAsync(int id, string newName, string newEmail)
     {
         var student = await _studentRepository
             .Query()
@@ -99,6 +99,7 @@ public class StudentService : IStudentService
         }
 
         student.Rename(newName);
+        student.ChangeEmail(newEmail);
 
         await _studentRepository.SaveChangesAsync();
     }
