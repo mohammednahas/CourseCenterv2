@@ -8,9 +8,18 @@ namespace CourseCenterv2.Application.Interfaces
 
         Task<IReadOnlyList<Student?>> GetAllAsync();
 
-        Task CreateAsync(string name, string email);
+        Task CreateAsync(
+            string firstName,
+            string lastName,
+            string email,
+            string? mobile);
 
-        Task RenameAsync(int id, string newName, string newEmail);
+        Task RenameAsync(
+            int id,
+            string firstName,
+            string lastName,
+            string email,
+            string? mobile);
 
         Task DeleteAsync(int id);
 
