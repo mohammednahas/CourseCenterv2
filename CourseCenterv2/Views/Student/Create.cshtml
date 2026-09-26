@@ -22,23 +22,47 @@
 
                     <div class="mb-4">
 
-                        <label for="name"
+                        <label for="firstName"
                                class="form-label fw-semibold">
-                            Student Name
+                            First Name
                         </label>
 
-                        <input id="name"
-                               name="name"
+                        <input id="firstName"
+                               name="firstName"
                                type="text"
                                class="form-control form-control-lg"
-                               placeholder="Enter student name"
+                               placeholder="Enter first name"
                                autocomplete="off"
                                required />
 
-                        @if (ViewData.ModelState["name"]?.Errors.Count > 0)
+                        @if (ViewData.ModelState["firstName"]?.Errors.Count > 0)
                         {
                             <div class="text-danger mt-2">
-                                @ViewData.ModelState["name"]!.Errors[0].ErrorMessage
+                                @ViewData.ModelState["firstName"]!.Errors[0].ErrorMessage
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label for="lastName"
+                               class="form-label fw-semibold">
+                            Last Name
+                        </label>
+
+                        <input id="lastName"
+                               name="lastName"
+                               type="text"
+                               class="form-control form-control-lg"
+                               placeholder="Enter last name"
+                               autocomplete="off"
+                               required />
+
+                        @if (ViewData.ModelState["lastName"]?.Errors.Count > 0)
+                        {
+                            <div class="text-danger mt-2">
+                                @ViewData.ModelState["lastName"]!.Errors[0].ErrorMessage
                             </div>
                         }
 
@@ -63,6 +87,29 @@
                         {
                             <div class="text-danger mt-2">
                                 @ViewData.ModelState["email"]!.Errors[0].ErrorMessage
+                            </div>
+                        }
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label for="mobile"
+                               class="form-label fw-semibold">
+                            Mobile
+                        </label>
+
+                        <input id="mobile"
+                               name="mobile"
+                               type="tel"
+                               class="form-control form-control-lg"
+                               placeholder="Enter mobile number"
+                               autocomplete="off" />
+
+                        @if (ViewData.ModelState["mobile"]?.Errors.Count > 0)
+                        {
+                            <div class="text-danger mt-2">
+                                @ViewData.ModelState["mobile"]!.Errors[0].ErrorMessage
                             </div>
                         }
 
