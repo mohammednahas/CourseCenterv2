@@ -48,8 +48,10 @@ else
                     <thead class="table-light">
                         <tr>
                             <th class="ps-4">#</th>
-                            <th>Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
+                            <th>Mobile</th>
                             <th class="text-end pe-4">Actions</th>
                         </tr>
                     </thead>
@@ -64,12 +66,20 @@ else
 
                                 <td>
                                     <div class="fw-semibold">
-                                        @student.Name
+                                        @student.FirstName
                                     </div>
                                 </td>
 
                                 <td>
+                                    @student.LastName
+                                </td>
+
+                                <td>
                                     @student.Email
+                                </td>
+
+                                <td>
+                                    @student.Mobile
                                 </td>
 
                                 <td class="text-end pe-4">
