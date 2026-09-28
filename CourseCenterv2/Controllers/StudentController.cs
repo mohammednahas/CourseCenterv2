@@ -52,9 +52,17 @@ namespace CourseCenterv2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string name, string email)
+        public async Task<IActionResult> Create(
+            string firstName,
+            string lastName,
+            string email,
+            string? mobile)
         {
-            await _studentService.CreateAsync(name, email);
+            await _studentService.CreateAsync(
+                firstName,
+                lastName,
+                email,
+                mobile);
 
             return RedirectToAction(nameof(Index));
         }
@@ -76,10 +84,17 @@ namespace CourseCenterv2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-            string name,
-            string email)
+            string firstName,
+            string lastName,
+            string email,
+            string? mobile)
         {
-            await _studentService.RenameAsync(id, name, email);
+            await _studentService.RenameAsync(
+                id,
+                firstName,
+                lastName,
+                email,
+                mobile);
 
             return RedirectToAction(nameof(Index));
         }

@@ -37,14 +37,14 @@
                              style="width: 60px; height: 60px;">
 
                             <span class="fs-4 fw-bold">
-                                @Model.Student.Name.Substring(0, 1).ToUpper()
+                                @Model.Student.FirstName.Substring(0, 1).ToUpper()
                             </span>
 
                         </div>
 
                         <div class="ms-3">
                             <h4 class="fw-bold mb-1">
-                                @Model.Student.Name
+                                @Model.Student.FirstName @Model.Student.LastName
                             </h4>
 
                             <span class="text-muted">
@@ -68,21 +68,41 @@
 
                     <div class="mb-3">
                         <small class="text-muted d-block">
-                            NAME
+                            FIRST NAME
                         </small>
 
                         <span class="fw-semibold">
-                            @Model.Student.Name
+                            @Model.Student.FirstName
                         </span>
                     </div>
 
-                    <div>
+                    <div class="mb-3">
+                        <small class="text-muted d-block">
+                            LAST NAME
+                        </small>
+
+                        <span class="fw-semibold">
+                            @Model.Student.LastName
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
                         <small class="text-muted d-block">
                             EMAIL
                         </small>
 
                         <span class="fw-semibold">
                             @Model.Student.Email
+                        </span>
+                    </div>
+
+                    <div>
+                        <small class="text-muted d-block">
+                            MOBILE
+                        </small>
+
+                        <span class="fw-semibold">
+                            @Model.Student.Mobile
                         </span>
                     </div>
 

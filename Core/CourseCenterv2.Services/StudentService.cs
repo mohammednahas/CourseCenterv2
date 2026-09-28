@@ -20,9 +20,17 @@ public class StudentService : IStudentService
         _enrollmentRepository = enrollmentRepository;
     }
 
-    public async Task CreateAsync(string name, string email)
+    public async Task CreateAsync(
+        string firstName,
+        string lastName,
+        string email,
+        string? mobile)
     {
-        var student = new Student(name, email);
+        var student = new Student(
+            firstName,
+            lastName,
+            email,
+            mobile);
 
         await _studentRepository.AddAsync(student);
         await _studentRepository.SaveChangesAsync();
@@ -86,7 +94,12 @@ public class StudentService : IStudentService
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task RenameAsync(int id, string newName, string newEmail)
+    public async Task RenameAsync(
+        int id,
+        string firstName,
+        string lastName,
+        string email,
+        string? mobile)
     {
         var student = await _studentRepository
             .Query()
@@ -98,8 +111,9 @@ public class StudentService : IStudentService
                 "This Student not found");
         }
 
-        student.Rename(newName);
-        student.ChangeEmail(newEmail);
+        student.Rename(firstName, lastName);
+        student.ChangeEmail(email);
+        student.ChangeMobile(mobile);
 
         await _studentRepository.SaveChangesAsync();
     }
