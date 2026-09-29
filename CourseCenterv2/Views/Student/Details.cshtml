@@ -37,14 +37,18 @@
                              style="width: 60px; height: 60px;">
 
                             <span class="fs-4 fw-bold">
-                                @Model.Student.FirstName.Substring(0, 1).ToUpper()
+                               @(string.IsNullOrWhiteSpace(Model.Student.FirstName)
+    ? "?"
+    : Model.Student.FirstName.Substring(0, 1).ToUpper())
                             </span>
 
                         </div>
 
                         <div class="ms-3">
                             <h4 class="fw-bold mb-1">
-                                @Model.Student.FirstName @Model.Student.LastName
+                                @(string.IsNullOrWhiteSpace(Model.Student.LastName)
+    ? "?"
+    : Model.Student.LastName.Substring(0, 1).ToUpper())
                             </h4>
 
                             <span class="text-muted">
