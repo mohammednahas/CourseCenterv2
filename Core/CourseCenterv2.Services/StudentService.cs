@@ -1,3 +1,4 @@
+
 using CourseCenterv2.Application.Interfaces;
 using CourseCenterv2.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -23,14 +24,12 @@ public class StudentService : IStudentService
     public async Task CreateAsync(
         string firstName,
         string lastName,
-        string email,
-        string? mobile)
+        string email)
     {
         var student = new Student(
             firstName,
             lastName,
-            email,
-            mobile);
+            email);
 
         await _studentRepository.AddAsync(student);
         await _studentRepository.SaveChangesAsync();
@@ -51,7 +50,9 @@ public class StudentService : IStudentService
         await _studentRepository.SaveChangesAsync();
     }
 
-    public async Task EnrollInCourseAsync(int studentId, int courseId)
+    public async Task EnrollInCourseAsync(
+        int studentId,
+        int courseId)
     {
         var student = await _studentRepository
             .Query()
@@ -97,9 +98,7 @@ public class StudentService : IStudentService
     public async Task RenameAsync(
         int id,
         string firstName,
-        string lastName,
-        string email,
-        string? mobile)
+        string lastName)
     {
         var student = await _studentRepository
             .Query()
@@ -112,9 +111,28 @@ public class StudentService : IStudentService
         }
 
         student.Rename(firstName, lastName);
+
+        await _studentRepository.SaveChangesAsync();
+    }
+
+    public async Task ChangeEmailAsync(
+        int id,
+        string email)
+    {
+        var student = await _studentRepository
+            .Query()
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (student is null)
+        {
+            throw new InvalidOperationException(
+                "This Student not found");
+        }
+
         student.ChangeEmail(email);
-        student.ChangeMobile(mobile);
 
         await _studentRepository.SaveChangesAsync();
     }
 }
+
+

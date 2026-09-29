@@ -12,8 +12,6 @@ public class Student
 
     public string Email { get; set; }
 
-    public string? Mobile { get; private set; }
-
     public virtual IReadOnlyCollection<Enrollment> Enrollments
         => _enrollments.AsReadOnly();
 
@@ -22,16 +20,11 @@ public class Student
         // Required by EF Core and Lazy Loading Proxy
     }
 
-    public Student(
-        string firstName,
-        string lastName,
-        string email,
-        string? mobile)
+    public Student(string firstName, string lastName, string email)
     {
         SetFirstName(firstName);
         SetLastName(lastName);
         SetEmail(email);
-        SetMobile(mobile);
     }
 
     public void Rename(string firstName, string lastName)
@@ -43,11 +36,6 @@ public class Student
     public void ChangeEmail(string email)
     {
         SetEmail(email);
-    }
-
-    public void ChangeMobile(string? mobile)
-    {
-        SetMobile(mobile);
     }
 
     public Enrollment EnrollIn(Course course)
@@ -94,12 +82,5 @@ public class Student
                 nameof(email));
 
         Email = email.Trim();
-    }
-
-    private void SetMobile(string? mobile)
-    {
-        Mobile = string.IsNullOrWhiteSpace(mobile)
-            ? null
-            : mobile.Trim();
     }
 }

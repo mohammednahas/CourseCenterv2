@@ -5,13 +5,13 @@ namespace CourseCenterv2.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
         {
-
         }
+
         public DbSet<Student> Students => Set<Student>();
         public DbSet<Course> Courses => Set<Course>();
-
         public DbSet<Enrollment> Enrollments => Set<Enrollment>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,40 +31,40 @@ namespace CourseCenterv2.Infrastructure.Data
                     .HasMaxLength(100);
 
                 entity.Property(x => x.Email)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<Course>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.Title)
                     .IsRequired()
                     .HasMaxLength(200);
 
-                entity.Property(x => x.Mobile)
-                    .HasMaxLength(20);
+                entity.Property(x => x.Capacity)
+                    .IsRequired();
+
+                entity.Property(x => x.Version)
+                    .IsConcurrencyToken();
             });
-            modelBuilder.Entity<Course>(entity =>
-           {
-               entity.HasKey(x => x.Id);
-               entity.Property(x => x.Title).IsRequired().HasMaxLength(200);
 
-               entity.Property(x => x.Capacity).IsRequired();
-
-               entity.Property(x => x.Version).IsConcurrencyToken();
-
-
-           }
-           );
             modelBuilder.Entity<Enrollment>(entity =>
             {
                 entity.HasKey(x => x.Id);
 
-                entity.Property(x => x.EnrolledAt).IsRequired();
+                entity.Property(x => x.EnrolledAt)
+                    .IsRequired();
 
                 entity.HasOne(x => x.Student)
-                .WithMany(x => x.Enrollments)
-                .HasForeignKey(x => x.StudentId)
-                .OnDelete(DeleteBehavior.Cascade);
-
+                    .WithMany(x => x.Enrollments)
+                    .HasForeignKey(x => x.StudentId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(x => x.Course)
-                .WithMany(x => x.Enrollments)
-                .HasForeignKey(x => x.CourseId)
-                .OnDelete(DeleteBehavior.Cascade);
+                    .WithMany(x => x.Enrollments)
+                    .HasForeignKey(x => x.CourseId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasIndex(x => new
                 {
@@ -72,13 +72,7 @@ namespace CourseCenterv2.Infrastructure.Data
                     x.CourseId
 
                 }).IsUnique();
-
             });
-
-
-
         }
-
-
     }
 }

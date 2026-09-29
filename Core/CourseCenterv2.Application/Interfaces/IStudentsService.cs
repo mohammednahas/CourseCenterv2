@@ -11,18 +11,21 @@ namespace CourseCenterv2.Application.Interfaces
         Task CreateAsync(
             string firstName,
             string lastName,
-            string email,
-            string? mobile);
+            string email);
 
         Task RenameAsync(
             int id,
             string firstName,
-            string lastName,
-            string email,
-            string? mobile);
+            string lastName);
+
+        Task ChangeEmailAsync(
+            int id,
+            string email);
 
         Task DeleteAsync(int id);
 
-        Task EnrollInCourseAsync(int studentid, int courseid);
+        Task EnrollInCourseAsync(
+            int studentId,
+            int courseId);
     }
 }

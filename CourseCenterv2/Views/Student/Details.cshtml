@@ -21,7 +21,6 @@
         </a>
     </div>
 
-
     <div class="row g-4">
 
         <!-- Student Information -->
@@ -37,7 +36,9 @@
                              style="width: 60px; height: 60px;">
 
                             <span class="fs-4 fw-bold">
-                                @Model.Student.FirstName.Substring(0, 1).ToUpper()
+                                @(string.IsNullOrWhiteSpace(Model.Student.FirstName)
+                                    ? "?"
+                                    : Model.Student.FirstName.Substring(0, 1).ToUpper())
                             </span>
 
                         </div>
@@ -86,7 +87,7 @@
                         </span>
                     </div>
 
-                    <div class="mb-3">
+                    <div>
                         <small class="text-muted d-block">
                             EMAIL
                         </small>
@@ -96,21 +97,10 @@
                         </span>
                     </div>
 
-                    <div>
-                        <small class="text-muted d-block">
-                            MOBILE
-                        </small>
-
-                        <span class="fw-semibold">
-                            @Model.Student.Mobile
-                        </span>
-                    </div>
-
                 </div>
             </div>
 
         </div>
-
 
         <!-- Enroll Student -->
         <div class="col-lg-7">
@@ -178,7 +168,6 @@
 
     </div>
 
-
     <!-- Enrolled Courses -->
     <div class="card border-0 shadow-sm mt-4">
 
@@ -202,7 +191,6 @@
                 </span>
 
             </div>
-
 
             @if (!Model.Student.Enrollments.Any())
             {
@@ -267,7 +255,6 @@
         </div>
 
     </div>
-
 
     <!-- Actions -->
     <div class="d-flex gap-2 mt-4">

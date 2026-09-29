@@ -98,29 +98,6 @@
 
                     </div>
 
-                    <div class="mb-4">
-
-                        <label for="mobile"
-                               class="form-label fw-semibold">
-                            Mobile
-                        </label>
-
-                        <input id="mobile"
-                               name="mobile"
-                               type="tel"
-                               value="@Model.Mobile"
-                               class="form-control form-control-lg"
-                               autocomplete="off" />
-
-                        @if (ViewData.ModelState["mobile"]?.Errors.Count > 0)
-                        {
-                            <div class="text-danger mt-2">
-                                @ViewData.ModelState["mobile"]!.Errors[0].ErrorMessage
-                            </div>
-                        }
-
-                    </div>
-
                     <div class="d-flex justify-content-between">
 
                         <a asp-action="Details"

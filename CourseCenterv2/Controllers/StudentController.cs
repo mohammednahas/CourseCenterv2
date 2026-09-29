@@ -1,6 +1,6 @@
+
 using CourseCenterv2.Application.Interfaces;
 using CourseCenterv2.Application.ViewModels;
-using CourseCenterv2.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseCenterv2.Controllers
@@ -22,8 +22,6 @@ namespace CourseCenterv2.Controllers
         {
             var students = await _studentService.GetAllAsync();
             return View(students);
-
-            // return Content("wwwwww");
         }
 
         public async Task<IActionResult> Details(int id)
@@ -55,14 +53,12 @@ namespace CourseCenterv2.Controllers
         public async Task<IActionResult> Create(
             string firstName,
             string lastName,
-            string email,
-            string? mobile)
+            string email)
         {
             await _studentService.CreateAsync(
                 firstName,
                 lastName,
-                email,
-                mobile);
+                email);
 
             return RedirectToAction(nameof(Index));
         }
@@ -86,15 +82,16 @@ namespace CourseCenterv2.Controllers
             int id,
             string firstName,
             string lastName,
-            string email,
-            string? mobile)
+            string email)
         {
             await _studentService.RenameAsync(
                 id,
                 firstName,
-                lastName,
-                email,
-                mobile);
+                lastName);
+
+            await _studentService.ChangeEmailAsync(
+                id,
+                email);
 
             return RedirectToAction(nameof(Index));
         }
