@@ -1,3 +1,4 @@
+
 using CourseCenterv2.Application.Interfaces;
 using CourseCenterv2.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +21,15 @@ public class StudentService : IStudentService
         _enrollmentRepository = enrollmentRepository;
     }
 
-    public async Task CreateAsync(string name, string email)
+    public async Task CreateAsync(
+        string firstName,
+        string lastName,
+        string email)
     {
-        var student = new Student(name, email);
+        var student = new Student(
+            firstName,
+            lastName,
+            email);
 
         await _studentRepository.AddAsync(student);
         await _studentRepository.SaveChangesAsync();
@@ -43,7 +50,9 @@ public class StudentService : IStudentService
         await _studentRepository.SaveChangesAsync();
     }
 
-    public async Task EnrollInCourseAsync(int studentId, int courseId)
+    public async Task EnrollInCourseAsync(
+        int studentId,
+        int courseId)
     {
         var student = await _studentRepository
             .Query()
@@ -86,7 +95,10 @@ public class StudentService : IStudentService
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task RenameAsync(int id, string newName, string newEmail)
+    public async Task RenameAsync(
+        int id,
+        string firstName,
+        string lastName)
     {
         var student = await _studentRepository
             .Query()
@@ -98,9 +110,29 @@ public class StudentService : IStudentService
                 "This Student not found");
         }
 
-        student.Rename(newName);
-        student.ChangeEmail(newEmail);
+        student.Rename(firstName, lastName);
+
+        await _studentRepository.SaveChangesAsync();
+    }
+
+    public async Task ChangeEmailAsync(
+        int id,
+        string email)
+    {
+        var student = await _studentRepository
+            .Query()
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (student is null)
+        {
+            throw new InvalidOperationException(
+                "This Student not found");
+        }
+
+        student.ChangeEmail(email);
 
         await _studentRepository.SaveChangesAsync();
     }
 }
+
+

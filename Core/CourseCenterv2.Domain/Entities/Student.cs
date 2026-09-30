@@ -5,7 +5,10 @@ public class Student
     private readonly List<Enrollment> _enrollments = new();
 
     public int Id { get; private set; }
-    public string Name { get; private set; }
+
+    public string FirstName { get; private set; }
+
+    public string LastName { get; private set; }
 
     public string Email { get; set; }
 
@@ -17,15 +20,17 @@ public class Student
         // Required by EF Core and Lazy Loading Proxy
     }
 
-    public Student(string name, string email)
+    public Student(string firstName, string lastName, string email)
     {
-        SetName(name);
+        SetFirstName(firstName);
+        SetLastName(lastName);
         SetEmail(email);
     }
 
-    public void Rename(string name)
+    public void Rename(string firstName, string lastName)
     {
-        SetName(name);
+        SetFirstName(firstName);
+        SetLastName(lastName);
     }
 
     public void ChangeEmail(string email)
@@ -49,14 +54,24 @@ public class Student
         return enrollment;
     }
 
-    private void SetName(string name)
+    private void SetFirstName(string firstName)
     {
-        if (string.IsNullOrWhiteSpace(name))
+        if (string.IsNullOrWhiteSpace(firstName))
             throw new ArgumentException(
-                "Student name is required.",
-                nameof(name));
+                "Student first name is required.",
+                nameof(firstName));
 
-        Name = name.Trim();
+        FirstName = firstName.Trim();
+    }
+
+    private void SetLastName(string lastName)
+    {
+        if (string.IsNullOrWhiteSpace(lastName))
+            throw new ArgumentException(
+                "Student last name is required.",
+                nameof(lastName));
+
+        LastName = lastName.Trim();
     }
 
     private void SetEmail(string email)

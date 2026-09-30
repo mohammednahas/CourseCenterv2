@@ -1,6 +1,6 @@
+
 using CourseCenterv2.Application.Interfaces;
 using CourseCenterv2.Application.ViewModels;
-using CourseCenterv2.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseCenterv2.Controllers
@@ -22,8 +22,6 @@ namespace CourseCenterv2.Controllers
         {
             var students = await _studentService.GetAllAsync();
             return View(students);
-
-            // return Content("wwwwww");
         }
 
         public async Task<IActionResult> Details(int id)
@@ -52,9 +50,15 @@ namespace CourseCenterv2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string name, string email)
+        public async Task<IActionResult> Create(
+            string firstName,
+            string lastName,
+            string email)
         {
-            await _studentService.CreateAsync(name, email);
+            await _studentService.CreateAsync(
+                firstName,
+                lastName,
+                email);
 
             return RedirectToAction(nameof(Index));
         }
@@ -76,10 +80,18 @@ namespace CourseCenterv2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-            string name,
+            string firstName,
+            string lastName,
             string email)
         {
-            await _studentService.RenameAsync(id, name, email);
+            await _studentService.RenameAsync(
+                id,
+                firstName,
+                lastName);
+
+            await _studentService.ChangeEmailAsync(
+                id,
+                email);
 
             return RedirectToAction(nameof(Index));
         }
