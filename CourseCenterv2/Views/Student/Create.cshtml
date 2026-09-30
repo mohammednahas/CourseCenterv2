@@ -1,4 +1,3 @@
-
 @{
     ViewData["Title"] = "Add Student";
 }
@@ -93,6 +92,30 @@
 
                     </div>
 
+                    <div class="mb-4">
+
+                        <label for="address"
+                               class="form-label fw-semibold">
+                            Address
+                        </label>
+
+                        <input id="address"
+                               name="address"
+                               type="text"
+                               class="form-control form-control-lg"
+                               placeholder="Enter student address"
+                               autocomplete="street-address"
+                               required />
+
+                        @if (ViewData.ModelState["address"]?.Errors.Count > 0)
+                        {
+                            <div class="text-danger mt-2">
+                                @ViewData.ModelState["address"]!.Errors[0].ErrorMessage
+                            </div>
+                        }
+
+                    </div>
+
                     <div class="d-flex justify-content-end gap-2">
 
                         <a asp-action="Index"
@@ -116,4 +139,3 @@
     </div>
 
 </div>
-

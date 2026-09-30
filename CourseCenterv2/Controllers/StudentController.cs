@@ -1,4 +1,3 @@
-
 using CourseCenterv2.Application.Interfaces;
 using CourseCenterv2.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -53,12 +52,14 @@ namespace CourseCenterv2.Controllers
         public async Task<IActionResult> Create(
             string firstName,
             string lastName,
-            string email)
+            string email,
+            string address)
         {
             await _studentService.CreateAsync(
                 firstName,
                 lastName,
-                email);
+                email,
+                address);
 
             return RedirectToAction(nameof(Index));
         }
@@ -82,7 +83,8 @@ namespace CourseCenterv2.Controllers
             int id,
             string firstName,
             string lastName,
-            string email)
+            string email,
+            string address)
         {
             await _studentService.RenameAsync(
                 id,
@@ -92,6 +94,10 @@ namespace CourseCenterv2.Controllers
             await _studentService.ChangeEmailAsync(
                 id,
                 email);
+
+            await _studentService.ChangeAddressAsync(
+                id,
+                address);
 
             return RedirectToAction(nameof(Index));
         }
