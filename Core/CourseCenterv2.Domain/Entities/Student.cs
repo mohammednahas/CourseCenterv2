@@ -1,3 +1,4 @@
+
 namespace CourseCenterv2.Domain.Entities;
 
 public class Student
@@ -12,6 +13,8 @@ public class Student
 
     public string Email { get; set; }
 
+    public string Address { get; private set; }
+
     public virtual IReadOnlyCollection<Enrollment> Enrollments
         => _enrollments.AsReadOnly();
 
@@ -20,11 +23,16 @@ public class Student
         // Required by EF Core and Lazy Loading Proxy
     }
 
-    public Student(string firstName, string lastName, string email)
+    public Student(
+        string firstName,
+        string lastName,
+        string email,
+        string address)
     {
         SetFirstName(firstName);
         SetLastName(lastName);
         SetEmail(email);
+        SetAddress(address);
     }
 
     public void Rename(string firstName, string lastName)
@@ -36,6 +44,11 @@ public class Student
     public void ChangeEmail(string email)
     {
         SetEmail(email);
+    }
+
+    public void ChangeAddress(string address)
+    {
+        SetAddress(address);
     }
 
     public Enrollment EnrollIn(Course course)
@@ -82,5 +95,15 @@ public class Student
                 nameof(email));
 
         Email = email.Trim();
+    }
+
+    private void SetAddress(string address)
+    {
+        if (string.IsNullOrWhiteSpace(address))
+            throw new ArgumentException(
+                "Student address is required.",
+                nameof(address));
+
+        Address = address.Trim();
     }
 }

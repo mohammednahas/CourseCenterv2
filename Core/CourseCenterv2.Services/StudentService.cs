@@ -24,12 +24,14 @@ public class StudentService : IStudentService
     public async Task CreateAsync(
         string firstName,
         string lastName,
-        string email)
+        string email,
+        string address)
     {
         var student = new Student(
             firstName,
             lastName,
-            email);
+            email,
+            address);
 
         await _studentRepository.AddAsync(student);
         await _studentRepository.SaveChangesAsync();
@@ -133,6 +135,23 @@ public class StudentService : IStudentService
 
         await _studentRepository.SaveChangesAsync();
     }
+
+    public async Task ChangeAddressAsync(
+        int id,
+        string address)
+    {
+        var student = await _studentRepository
+            .Query()
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (student is null)
+        {
+            throw new InvalidOperationException(
+                "This Student not found");
+        }
+
+        student.ChangeAddress(address);
+
+        await _studentRepository.SaveChangesAsync();
+    }
 }
-
-

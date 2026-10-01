@@ -98,6 +98,30 @@
 
                     </div>
 
+                    <div class="mb-4">
+
+                        <label for="address"
+                               class="form-label fw-semibold">
+                            Address
+                        </label>
+
+                        <input id="address"
+                               name="address"
+                               type="text"
+                               value="@Model.Address"
+                               class="form-control form-control-lg"
+                               autocomplete="street-address"
+                               required />
+
+                        @if (ViewData.ModelState["address"]?.Errors.Count > 0)
+                        {
+                            <div class="text-danger mt-2">
+                                @ViewData.ModelState["address"]!.Errors[0].ErrorMessage
+                            </div>
+                        }
+
+                    </div>
+
                     <div class="d-flex justify-content-between">
 
                         <a asp-action="Details"

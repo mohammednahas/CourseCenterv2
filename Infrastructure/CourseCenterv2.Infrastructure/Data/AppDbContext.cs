@@ -17,7 +17,6 @@ namespace CourseCenterv2.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<Student>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -32,8 +31,11 @@ namespace CourseCenterv2.Infrastructure.Data
 
                 entity.Property(x => x.Email)
                     .IsRequired();
-            });
 
+                entity.Property(x => x.Address)
+                    .IsRequired()
+                    .HasMaxLength(300);
+            });
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.HasKey(x => x.Id);

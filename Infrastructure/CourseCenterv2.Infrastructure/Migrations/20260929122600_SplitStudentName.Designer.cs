@@ -81,26 +81,32 @@ namespace CourseCenterv2.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("CourseCenterv2.Domain.Entities.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+{
+    b.Property<int>("Id")
+        .ValueGeneratedOnAdd()
+        .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(
+        b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
+    b.Property<string>("Email")
+        .IsRequired()
+        .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+    b.Property<string>("FirstName")
+        .IsRequired()
+        .HasMaxLength(100)
+        .HasColumnType("character varying(100)");
 
-                    b.HasKey("Id");
+    b.Property<string>("LastName")
+        .IsRequired()
+        .HasMaxLength(100)
+        .HasColumnType("character varying(100)");
 
-                    b.ToTable("Students");
-                });
+    b.HasKey("Id");
+
+    b.ToTable("Students");
+});
 
             modelBuilder.Entity("CourseCenterv2.Domain.Entities.Enrollment", b =>
                 {
