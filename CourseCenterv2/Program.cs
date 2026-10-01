@@ -47,3 +47,5 @@ app.MapControllerRoute(
     pattern: "{controller=Student}/{action=Index}/{id?}");
 
 app.Run();
+
+//mohammed
