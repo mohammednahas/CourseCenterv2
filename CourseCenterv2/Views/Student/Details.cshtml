@@ -1,3 +1,4 @@
+
 @model CourseCenterv2.Application.ViewModels.StudentDetailsViewModel
 
 @{
@@ -94,6 +95,18 @@
 
                         <span class="fw-semibold">
                             @Model.Student.Email
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">
+                            SSN
+                        </small>
+
+                        <span class="fw-semibold">
+                            @(string.IsNullOrWhiteSpace(Model.Student.SSN)
+                                ? "Not provided"
+                                : Model.Student.SSN)
                         </span>
                     </div>
 
