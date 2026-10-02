@@ -1,3 +1,4 @@
+
 using CourseCenterv2.Application.Interfaces;
 using CourseCenterv2.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace CourseCenterv2.Controllers
         public async Task<IActionResult> Index()
         {
             var students = await _studentService.GetAllAsync();
+
             return View(students);
         }
 
@@ -53,12 +55,14 @@ namespace CourseCenterv2.Controllers
             string firstName,
             string lastName,
             string email,
+            string ssn,
             string address)
         {
             await _studentService.CreateAsync(
                 firstName,
                 lastName,
                 email,
+                ssn,
                 address);
 
             return RedirectToAction(nameof(Index));
@@ -84,6 +88,7 @@ namespace CourseCenterv2.Controllers
             string firstName,
             string lastName,
             string email,
+            string ssn,
             string address)
         {
             await _studentService.RenameAsync(
@@ -94,6 +99,10 @@ namespace CourseCenterv2.Controllers
             await _studentService.ChangeEmailAsync(
                 id,
                 email);
+
+            await _studentService.ChangeSSNAsync(
+                id,
+                ssn);
 
             await _studentService.ChangeAddressAsync(
                 id,
