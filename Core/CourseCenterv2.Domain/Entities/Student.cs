@@ -11,7 +11,9 @@ public class Student
 
     public string LastName { get; private set; }
 
-    public string Email { get; set; }
+    public string Email { get; private set; }
+
+    public string? SSN { get; private set; }
 
     public string Address { get; private set; }
 
@@ -27,11 +29,13 @@ public class Student
         string firstName,
         string lastName,
         string email,
+        string ssn,
         string address)
     {
         SetFirstName(firstName);
         SetLastName(lastName);
         SetEmail(email);
+        SetSSN(ssn);
         SetAddress(address);
     }
 
@@ -44,6 +48,11 @@ public class Student
     public void ChangeEmail(string email)
     {
         SetEmail(email);
+    }
+
+    public void ChangeSSN(string ssn)
+    {
+        SetSSN(ssn);
     }
 
     public void ChangeAddress(string address)
@@ -97,6 +106,16 @@ public class Student
         Email = email.Trim();
     }
 
+    private void SetSSN(string ssn)
+    {
+        if (string.IsNullOrWhiteSpace(ssn))
+            throw new ArgumentException(
+                "Student SSN is required.",
+                nameof(ssn));
+
+        SSN = ssn.Trim();
+    }
+
     private void SetAddress(string address)
     {
         if (string.IsNullOrWhiteSpace(address))
@@ -107,3 +126,4 @@ public class Student
         Address = address.Trim();
     }
 }
+

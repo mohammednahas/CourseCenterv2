@@ -13,6 +13,7 @@ namespace CourseCenterv2.Application.Interfaces
             string firstName,
             string lastName,
             string email,
+            string ssn,
             string address);
 
         Task RenameAsync(
@@ -23,6 +24,10 @@ namespace CourseCenterv2.Application.Interfaces
         Task ChangeEmailAsync(
             int id,
             string email);
+
+        Task ChangeSSNAsync(
+            int id,
+            string ssn);
 
         Task ChangeAddressAsync(
             int id,
@@ -35,3 +40,4 @@ namespace CourseCenterv2.Application.Interfaces
             int courseId);
     }
 }
+

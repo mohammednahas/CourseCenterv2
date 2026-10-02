@@ -1,3 +1,4 @@
+
 using CourseCenterv2.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ namespace CourseCenterv2.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Student>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -35,7 +37,11 @@ namespace CourseCenterv2.Infrastructure.Data
                 entity.Property(x => x.Address)
                     .IsRequired()
                     .HasMaxLength(300);
+
+                entity.Property(x => x.SSN)
+                    .HasMaxLength(20);
             });
+
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.HasKey(x => x.Id);
@@ -72,7 +78,6 @@ namespace CourseCenterv2.Infrastructure.Data
                 {
                     x.StudentId,
                     x.CourseId
-
                 }).IsUnique();
             });
         }

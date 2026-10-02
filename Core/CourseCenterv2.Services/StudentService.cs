@@ -25,12 +25,14 @@ public class StudentService : IStudentService
         string firstName,
         string lastName,
         string email,
+        string ssn,
         string address)
     {
         var student = new Student(
             firstName,
             lastName,
             email,
+            ssn,
             address);
 
         await _studentRepository.AddAsync(student);
@@ -132,6 +134,25 @@ public class StudentService : IStudentService
         }
 
         student.ChangeEmail(email);
+
+        await _studentRepository.SaveChangesAsync();
+    }
+
+    public async Task ChangeSSNAsync(
+        int id,
+        string ssn)
+    {
+        var student = await _studentRepository
+            .Query()
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (student is null)
+        {
+            throw new InvalidOperationException(
+                "This Student not found");
+        }
+
+        student.ChangeSSN(ssn);
 
         await _studentRepository.SaveChangesAsync();
     }
