@@ -1,0 +1,56 @@
+name: CourseCenterv2 CI/CD
+
+'on':
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore CourseCenterv2/CourseCenterv2.csproj
+
+      - name: Build
+        run: dotnet build CourseCenterv2/CourseCenterv2.csproj -c Release --no-restore
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 34.18.156.123
+          username: m_moustafa_elnahas
+          port: 22
+          key: ${{ secrets.SERVER_SSH_KEY }}
+
+          script: |
+            set -e
+
+            cd /home/m_moustafa_elnahas/CourseCenterv2
+
+            git pull --ff-only origin main
+
+            /home/m_moustafa_elnahas/.dotnet/dotnet publish \
+              CourseCenterv2/CourseCenterv2.csproj \
+              -c Release \
+              -o /home/m_moustafa_elnahas/CourseCenterv2/publish
+
+            sudo systemctl restart coursecenterv2.service
+
+            sudo systemctl is-active coursecenterv2.service
