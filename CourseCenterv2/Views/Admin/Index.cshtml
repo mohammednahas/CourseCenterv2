@@ -1,0 +1,731 @@
+
+@model List<CourseCenterv2.Infrastructure.Identity.ApplicationUser>
+
+@{
+    ViewData["Title"] = "لوحة تحكم SuperAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .admin-page {
+        direction: rtl;
+        padding: 30px 0 50px;
+        color: #172033;
+    }
+
+    .admin-hero {
+        position: relative;
+        overflow: hidden;
+        padding: 35px;
+        border-radius: 24px;
+        background: linear-gradient(125deg, #111827, #243b64 65%, #3156a5);
+        color: white;
+        box-shadow: 0 15px 40px rgba(22, 38, 72, .16);
+        margin-bottom: 28px;
+    }
+
+    .admin-hero::after {
+        content: "";
+        position: absolute;
+        width: 230px;
+        height: 230px;
+        border: 35px solid rgba(255,255,255,.06);
+        border-radius: 50%;
+        left: -55px;
+        top: -105px;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-label {
+        display: inline-block;
+        padding: 7px 13px;
+        border-radius: 30px;
+        background: rgba(255,255,255,.12);
+        color: #dbeafe;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    .admin-hero h1 {
+        font-size: clamp(25px, 3vw, 34px);
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .admin-hero p {
+        color: #d1dbee;
+        margin-bottom: 0;
+        max-width: 620px;
+        line-height: 1.9;
+    }
+
+    .btn-create-admin {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        background: #fff;
+        color: #203b70;
+        border: 0;
+        border-radius: 12px;
+        padding: 13px 20px;
+        font-weight: 800;
+        text-decoration: none;
+        transition: .2s ease;
+        white-space: nowrap;
+    }
+
+    .btn-create-admin:hover {
+        background: #eaf1ff;
+        color: #142b55;
+        transform: translateY(-2px);
+    }
+
+    /* System navigation cards */
+    .section-heading {
+        margin: 32px 0 18px;
+    }
+
+    .section-heading h2 {
+        font-size: 23px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .section-heading p {
+        color: #7a8498;
+        margin: 0;
+        line-height: 1.8;
+    }
+
+    .management-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 25px;
+        background: white;
+        border: 1px solid #e8edf5;
+        border-radius: 20px;
+        box-shadow: 0 5px 22px rgba(23, 32, 51, .04);
+        text-decoration: none;
+        color: #172033;
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .management-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 30px rgba(23, 32, 51, .10);
+        color: #172033;
+    }
+
+    .management-icon {
+        display: grid;
+        place-items: center;
+        width: 58px;
+        height: 58px;
+        border-radius: 17px;
+        font-size: 27px;
+        margin-bottom: 20px;
+    }
+
+    .students-icon {
+        background: #e8f1ff;
+        color: #2859b8;
+    }
+
+    .courses-icon {
+        background: #e4f8ed;
+        color: #18834a;
+    }
+
+    .admins-icon {
+        background: #f0eaff;
+        color: #7142bb;
+    }
+
+    .management-card h3 {
+        font-size: 19px;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .management-card p {
+        color: #7a8498;
+        line-height: 1.9;
+        font-size: 14px;
+        margin-bottom: 22px;
+        flex-grow: 1;
+    }
+
+    .management-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 15px;
+        border-top: 1px solid #edf0f6;
+        font-weight: 800;
+        font-size: 14px;
+    }
+
+    .students-link { color: #2859b8; }
+    .courses-link { color: #18834a; }
+    .admins-link { color: #7142bb; }
+
+    .admin-stat-card {
+        height: 100%;
+        padding: 23px;
+        border-radius: 18px;
+        background: white;
+        border: 1px solid #e8edf5;
+        box-shadow: 0 5px 22px rgba(23, 32, 51, .04);
+    }
+
+    .stat-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+    }
+
+    .stat-icon {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 15px;
+        font-size: 22px;
+        background: #edf3ff;
+        color: #3156a5;
+    }
+
+    .stat-number {
+        font-size: 32px;
+        font-weight: 800;
+        line-height: 1.2;
+        color: #172033;
+    }
+
+    .stat-title {
+        color: #778198;
+        font-size: 14px;
+        margin-top: 7px;
+    }
+
+    .admin-panel {
+        margin-top: 27px;
+        background: white;
+        border: 1px solid #e8edf5;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 5px 22px rgba(23, 32, 51, .04);
+    }
+
+    .panel-header {
+        padding: 23px 26px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        border-bottom: 1px solid #edf0f6;
+    }
+
+    .panel-header h2 {
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0 0 7px;
+    }
+
+    .panel-header p {
+        font-size: 13px;
+        color: #7a8498;
+        margin: 0;
+    }
+
+    .admin-table-wrap { overflow-x: auto; }
+
+    .admin-table {
+        width: 100%;
+        min-width: 620px;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 0;
+    }
+
+    .admin-table thead th {
+        background: #f8faff;
+        color: #66718a;
+        font-size: 13px;
+        font-weight: 700;
+        padding: 17px 24px;
+        border-bottom: 1px solid #edf0f6;
+        white-space: nowrap;
+    }
+
+    .admin-table tbody td {
+        padding: 19px 24px;
+        border-bottom: 1px solid #f0f2f7;
+        vertical-align: middle;
+        color: #303b50;
+    }
+
+    .admin-table tbody tr:last-child td { border-bottom: 0; }
+
+    .admin-table tbody tr { transition: background .2s; }
+
+    .admin-table tbody tr:hover { background: #fafbff; }
+
+    .user-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 210px;
+    }
+
+    .user-avatar {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #dce8ff, #edf2ff);
+        color: #3156a5;
+        font-weight: 800;
+        font-size: 18px;
+    }
+
+    .user-name {
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 5px;
+        overflow-wrap: anywhere;
+    }
+
+    .user-subtitle {
+        font-size: 12px;
+        color: #8992a5;
+    }
+
+    .role-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 11px;
+        border-radius: 30px;
+        background: #e9f8ef;
+        color: #21824b;
+        font-size: 12px;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 11px;
+        border-radius: 30px;
+        background: #f0f5ff;
+        color: #3156a5;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .status-dot {
+        width: 7px;
+        height: 7px;
+        background: #22a45a;
+        border-radius: 50%;
+    }
+
+    .btn-delete-admin {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border: 1px solid #f3d5d8;
+        background: #fff;
+        color: #c43c4b;
+        padding: 9px 13px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 700;
+        transition: .2s ease;
+    }
+
+    .btn-delete-admin:hover {
+        background: #fff0f1;
+        border-color: #e9aeb4;
+    }
+
+    .btn-delete-admin:disabled {
+        color: #8992a5;
+        background: #f4f5f8;
+        border-color: #e4e7ee;
+        cursor: not-allowed;
+    }
+
+    .alert-custom {
+        border: 0;
+        border-radius: 13px;
+        padding: 15px 18px;
+        margin-bottom: 20px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 55px 20px;
+    }
+
+    .empty-icon {
+        display: grid;
+        place-items: center;
+        width: 75px;
+        height: 75px;
+        margin: 0 auto 18px;
+        background: #edf3ff;
+        color: #3156a5;
+        border-radius: 24px;
+        font-size: 32px;
+    }
+
+    .empty-state h3 {
+        font-size: 20px;
+        font-weight: 800;
+        margin-bottom: 9px;
+    }
+
+    .empty-state p {
+        color: #7a8498;
+        margin-bottom: 20px;
+    }
+
+    .security-note {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-top: 22px;
+        padding: 17px 20px;
+        border: 1px solid #dce7fb;
+        background: #f4f8ff;
+        border-radius: 15px;
+        color: #405477;
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    .security-note strong {
+        display: block;
+        margin-bottom: 3px;
+        color: #243b64;
+    }
+
+    @@media (max-width: 767px) {
+        .admin-page { padding-top: 18px; }
+        .admin-hero { padding: 25px 21px; }
+        .hero-actions { margin-top: 22px; }
+        .panel-header {
+            padding: 20px;
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="container admin-page">
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-custom">
+            @TempData["Error"]
+        </div>
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-custom">
+            @TempData["Success"]
+        </div>
+    }
+
+    <!-- Main SuperAdmin header -->
+    <section class="admin-hero">
+        <div class="row align-items-center">
+            <div class="col-lg-8 hero-content">
+                <span class="hero-label">لوحة التحكم • SuperAdmin</span>
+                <h1>مرحبًا بك في لوحة تحكم النظام</h1>
+                <p>
+                    من هنا يمكنك الوصول إلى إدارة الطلاب والكورسات وحسابات المسؤولين
+                    من مكان واحد.
+                </p>
+            </div>
+
+            <div class="col-lg-4 text-lg-start hero-actions">
+                <a asp-controller="Admin"
+                   asp-action="Create"
+                   class="btn-create-admin">
+                    <span style="font-size:20px;">＋</span>
+                    إضافة مسؤول جديد
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Management navigation -->
+    <div class="section-heading">
+        <h2>إدارة النظام</h2>
+        <p>اختر القسم الذي تريد إدارته.</p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-6 col-xl-4">
+            <a asp-controller="Student"
+               asp-action="Index"
+               class="management-card">
+                <div class="management-icon students-icon">♙</div>
+                <h3>إدارة الطلاب</h3>
+                <p>
+                    عرض بيانات الطلاب ومتابعة حساباتهم وإضافة طلاب جدد
+                    أو تعديل بياناتهم من خلال صفحة إدارة الطلاب.
+                </p>
+                <div class="management-link students-link">
+                    <span>الانتقال إلى الطلاب</span>
+                    <span>←</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+            <a asp-controller="Course"
+               asp-action="Index"
+               class="management-card">
+                <div class="management-icon courses-icon">▤</div>
+                <h3>إدارة الكورسات</h3>
+                <p>
+                    عرض الكورسات ومراجعة تفاصيلها وإنشاء كورسات جديدة
+                    وتعديل بياناتها أو حذفها.
+                </p>
+                <div class="management-link courses-link">
+                    <span>الانتقال إلى الكورسات</span>
+                    <span>←</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+            <a asp-controller="Admin"
+               asp-action="Index"
+               class="management-card">
+                <div class="management-icon admins-icon">♧</div>
+                <h3>إدارة المسؤولين</h3>
+                <p>
+                    متابعة حسابات Admin وإنشاء حسابات مسؤولين جدد
+                    وإدارة صلاحيات الوصول إلى النظام.
+                </p>
+                <div class="management-link admins-link">
+                    <span>إدارة حسابات المسؤولين</span>
+                    <span>←</span>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Admin account statistics -->
+    <div class="section-heading">
+        <h2>ملخص الإدارة</h2>
+        <p>نظرة سريعة على حسابات المسؤولين وحماية لوحة التحكم.</p>
+    </div>
+
+    <div class="row g-3">
+
+        <div class="col-md-6 col-xl-4">
+            <div class="admin-stat-card">
+                <div class="stat-top">
+                    <div>
+                        <div class="stat-number">@Model.Count</div>
+                        <div class="stat-title">إجمالي حسابات المسؤولين</div>
+                    </div>
+                    <div class="stat-icon">♙</div>
+                </div>
+                <div class="text-muted small">
+                    الحسابات التي تحمل صلاحية Admin
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-4">
+            <div class="admin-stat-card">
+                <div class="stat-top">
+                    <div>
+                        <div class="stat-number">محمي</div>
+                        <div class="stat-title">صلاحيات لوحة الإدارة</div>
+                    </div>
+                    <div class="stat-icon">♢</div>
+                </div>
+                <div class="text-muted small">
+                    إدارة المسؤولين مقتصرة على SuperAdmin
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-xl-4">
+            <div class="admin-stat-card">
+                <div class="stat-top">
+                    <div>
+                        <div class="stat-number">Identity</div>
+                        <div class="stat-title">إدارة الحسابات</div>
+                    </div>
+                    <div class="stat-icon">✓</div>
+                </div>
+                <div class="text-muted small">
+                    إدارة المستخدمين والأدوار باستخدام ASP.NET Core Identity
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Admin accounts table -->
+    <section class="admin-panel">
+        <div class="panel-header">
+            <div>
+                <h2>حسابات المسؤولين</h2>
+                <p>راجع الحسابات المسجلة واتخذ الإجراء المناسب.</p>
+            </div>
+
+            <span class="status-pill">
+                <span class="status-dot"></span>
+                @Model.Count حساب
+            </span>
+        </div>
+
+        @if (Model.Count > 0)
+        {
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>المسؤول</th>
+                            <th>الدور</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var admin in Model)
+                        {
+                            var isCurrentUser =
+                                admin.Id == User.FindFirst(
+                                    System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+                            <tr>
+                                <td>
+                                    <div class="user-cell">
+                                        <div class="user-avatar">
+                                            @(string.IsNullOrWhiteSpace(admin.Email)
+                                                ? "A"
+                                                : admin.Email.Substring(0, 1).ToUpper())
+                                        </div>
+
+                                        <div>
+                                            <div class="user-name">
+                                                @(admin.Email ?? admin.UserName)
+                                            </div>
+                                            <div class="user-subtitle">
+                                                @(isCurrentUser
+                                                    ? "حسابك الحالي"
+                                                    : "حساب مسؤول")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="role-pill">✓ Admin</span>
+
+                                    @if (isCurrentUser)
+                                    {
+                                        <div class="mt-2">
+                                            <span class="status-pill">
+                                                SuperAdmin
+                                            </span>
+                                        </div>
+                                    }
+                                </td>
+
+                                <td>
+                                    <span class="status-pill">
+                                        <span class="status-dot"></span>
+                                        مسجل بالنظام
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @if (isCurrentUser)
+                                    {
+                                        <button type="button"
+                                                class="btn-delete-admin"
+                                                disabled
+                                                title="لا يمكنك حذف حسابك الحالي">
+                                            🔒 حسابك الأساسي
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <form asp-controller="Admin"
+                                              asp-action="Delete"
+                                              method="post"
+                                              onsubmit="return confirm('هل أنت متأكد من حذف حساب المسؤول هذا؟ لا يمكن التراجع عن العملية.');">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@admin.Id" />
+
+                                            <button type="submit"
+                                                    class="btn-delete-admin">
+                                                <span>⌫</span>
+                                                حذف الحساب
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="empty-state">
+                <div class="empty-icon">♙</div>
+                <h3>لا توجد حسابات مسؤولين</h3>
+                <p>ابدأ بإضافة أول حساب مسؤول إلى النظام.</p>
+                <a asp-controller="Admin"
+                   asp-action="Create"
+                   class="btn btn-primary px-4 py-2">
+                    إضافة مسؤول جديد
+                </a>
+            </div>
+        }
+    </section>
+
+    <div class="security-note">
+        <span style="font-size:22px;">🛡</span>
+        <div>
+            <strong>إدارة آمنة للصلاحيات</strong>
+            يمكن للـ SuperAdmin الوصول إلى أقسام النظام المختلفة،
+            بينما تظل إدارة حسابات المسؤولين مقتصرة على SuperAdmin.
+        </div>
+    </div>
+
+</div>
+

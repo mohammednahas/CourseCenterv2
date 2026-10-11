@@ -1,0 +1,529 @@
+
+@{
+    ViewData["Title"] = "إضافة مسؤول جديد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var emailValue = ViewData["Email"] as string ?? "";
+}
+
+<style>
+    .create-page {
+        direction: rtl;
+        padding: 32px 0 55px;
+        color: #172033;
+    }
+
+    .create-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: #7c879d;
+        font-size: 13px;
+        margin-bottom: 22px;
+    }
+
+    .create-breadcrumb a {
+        color: #3156a5;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .create-heading {
+        margin-bottom: 26px;
+    }
+
+    .create-heading h1 {
+        font-size: clamp(26px, 3vw, 34px);
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .create-heading p {
+        color: #7a8498;
+        line-height: 1.9;
+        margin: 0;
+    }
+
+    .create-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(260px, .85fr);
+        gap: 24px;
+        align-items: start;
+    }
+
+    .create-card {
+        background: #fff;
+        border: 1px solid #e7ecf4;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(23, 32, 51, .05);
+    }
+
+    .create-card-header {
+        padding: 25px 28px;
+        border-bottom: 1px solid #edf0f6;
+        background: #fcfdff;
+    }
+
+    .create-card-header h2 {
+        font-size: 19px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .create-card-header p {
+        margin: 0;
+        color: #7a8498;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .create-card-body {
+        padding: 28px;
+    }
+
+    .field-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 800;
+        margin-bottom: 10px;
+        color: #29364d;
+    }
+
+    .field-label .required {
+        color: #d14353;
+    }
+
+    .field-input-wrap {
+        position: relative;
+        margin-bottom: 23px;
+    }
+
+    .field-icon {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #8590a6;
+        font-size: 18px;
+        pointer-events: none;
+    }
+
+    .field-input {
+        width: 100%;
+        min-height: 54px;
+        border: 1px solid #dfe5ef;
+        border-radius: 13px;
+        background: #fff;
+        padding: 13px 48px 13px 15px;
+        font-size: 14px;
+        color: #172033;
+        outline: none;
+        transition: border-color .2s, box-shadow .2s;
+        direction: ltr;
+        text-align: left;
+    }
+
+    .field-input:focus {
+        border-color: #5278c7;
+        box-shadow: 0 0 0 4px rgba(49, 86, 165, .10);
+    }
+
+    .field-help {
+        font-size: 12px;
+        color: #8992a5;
+        margin-top: 9px;
+        line-height: 1.8;
+    }
+
+    .password-toggle {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 0;
+        background: transparent;
+        color: #68758c;
+        padding: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .password-toggle:hover {
+        color: #3156a5;
+    }
+
+    .password-rules {
+        padding: 17px 18px;
+        background: #f7f9fd;
+        border: 1px solid #e9eef7;
+        border-radius: 14px;
+        margin-top: -3px;
+        margin-bottom: 24px;
+    }
+
+    .password-rules h3 {
+        font-size: 13px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .password-rules ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .password-rules li {
+        font-size: 12px;
+        color: #6f7a90;
+        line-height: 1.7;
+    }
+
+    .password-rules li::before {
+        content: "✓";
+        color: #3156a5;
+        font-weight: 900;
+        margin-left: 7px;
+    }
+
+    .validation-summary-errors,
+    .validation-summary-valid {
+        border-radius: 12px;
+        margin-bottom: 22px;
+        font-size: 13px;
+    }
+
+    .validation-summary-errors {
+        border: 1px solid #f1c8cd;
+        background: #fff4f5;
+        color: #b52f40;
+        padding: 14px 17px;
+    }
+
+    .validation-summary-errors ul {
+        margin: 0;
+        padding-right: 20px;
+    }
+
+    .create-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding-top: 6px;
+    }
+
+    .btn-submit-admin {
+        min-height: 49px;
+        border: 0;
+        border-radius: 12px;
+        background: linear-gradient(120deg, #3156a5, #25437f);
+        color: #fff;
+        padding: 12px 22px;
+        font-size: 14px;
+        font-weight: 800;
+        transition: .2s ease;
+        cursor: pointer;
+    }
+
+    .btn-submit-admin:hover {
+        background: linear-gradient(120deg, #25437f, #1b315e);
+        transform: translateY(-1px);
+    }
+
+    .btn-cancel-admin {
+        min-height: 49px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 20px;
+        border: 1px solid #e0e6f0;
+        border-radius: 12px;
+        color: #56627a;
+        background: white;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .btn-cancel-admin:hover {
+        background: #f7f9fc;
+        color: #26344e;
+    }
+
+    .side-panel {
+        border-radius: 22px;
+        padding: 27px;
+        background: linear-gradient(150deg, #17233b, #253f70);
+        color: white;
+        box-shadow: 0 12px 32px rgba(23, 35, 59, .13);
+    }
+
+    .side-icon {
+        width: 58px;
+        height: 58px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        background: rgba(255,255,255,.12);
+        font-size: 27px;
+        margin-bottom: 22px;
+    }
+
+    .side-panel h2 {
+        font-size: 21px;
+        font-weight: 800;
+        margin-bottom: 13px;
+    }
+
+    .side-panel > p {
+        font-size: 13px;
+        color: #d2dcf0;
+        line-height: 2;
+        margin-bottom: 25px;
+    }
+
+    .side-feature {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px 0;
+        border-top: 1px solid rgba(255,255,255,.12);
+    }
+
+    .side-feature-icon {
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: rgba(255,255,255,.10);
+        color: #dbeafe;
+    }
+
+    .side-feature strong {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+
+    .side-feature span {
+        display: block;
+        color: #c3cfe5;
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    .side-warning {
+        margin-top: 20px;
+        border: 1px solid rgba(255,255,255,.16);
+        background: rgba(255,255,255,.07);
+        border-radius: 13px;
+        padding: 14px;
+        color: #e2eaf9;
+        font-size: 12px;
+        line-height: 1.9;
+    }
+
+    @@media (max-width: 900px) {
+        .create-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .side-panel {
+            order: 2;
+        }
+    }
+
+    @@media (max-width: 575px) {
+        .create-card-body,
+        .create-card-header {
+            padding: 21px;
+        }
+
+        .password-rules ul {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="container create-page">
+
+    <div class="create-breadcrumb">
+        <a asp-controller="Admin" asp-action="Index">
+            إدارة المسؤولين
+        </a>
+        <span>‹</span>
+        <span>إضافة مسؤول جديد</span>
+    </div>
+
+    <div class="create-heading">
+        <h1>إضافة مسؤول جديد</h1>
+        <p>
+            أنشئ حسابًا جديدًا ومنحه صلاحية إدارة النظام باستخدام بريد إلكتروني وكلمة مرور.
+        </p>
+    </div>
+
+    <div class="create-layout">
+
+        <section class="create-card">
+            <div class="create-card-header">
+                <h2>بيانات الحساب</h2>
+                <p>أدخل بيانات المسؤول الجديد في الحقول التالية.</p>
+            </div>
+
+            <div class="create-card-body">
+
+                <form asp-controller="Admin"
+                      asp-action="Create"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="All"
+                         class="validation-summary-errors"></div>
+
+                    <div>
+                        <label for="email" class="field-label">
+                            البريد الإلكتروني
+                            <span class="required">*</span>
+                        </label>
+
+                        <div class="field-input-wrap">
+                            <span class="field-icon">✉</span>
+
+                            <input type="email"
+                                   id="email"
+                                   name="email"
+                                   class="field-input"
+                                   placeholder="admin@example.com"
+                                   autocomplete="email"
+                                   maxlength="256"
+                                   required
+                                   value="@emailValue" />
+                        </div>
+
+                        <div class="field-help">
+                            سيستخدم المسؤول هذا البريد الإلكتروني لتسجيل الدخول.
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label for="password" class="field-label">
+                            كلمة المرور
+                            <span class="required">*</span>
+                        </label>
+
+                        <div class="field-input-wrap">
+                            <span class="field-icon">♙</span>
+
+                            <input type="password"
+                                   id="password"
+                                   name="password"
+                                   class="field-input"
+                                   placeholder="أدخل كلمة مرور قوية"
+                                   autocomplete="new-password"
+                                   minlength="8"
+                                   required />
+
+                            <button type="button"
+                                    class="password-toggle"
+                                    onclick="togglePassword()">
+                                إظهار
+                            </button>
+                        </div>
+
+                        <div class="field-help">
+                            اختر كلمة مرور قوية ولا تشاركها مع أشخاص آخرين.
+                        </div>
+                    </div>
+
+                    <div class="password-rules">
+                        <h3>متطلبات كلمة المرور</h3>
+                        <ul>
+                            <li>8 أحرف على الأقل</li>
+                            <li>حرف كبير واحد على الأقل</li>
+                            <li>حرف صغير واحد على الأقل</li>
+                            <li>رقم واحد على الأقل</li>
+                        </ul>
+                    </div>
+
+                    <div class="create-actions">
+                        <button type="submit" class="btn-submit-admin">
+                            ＋ إنشاء حساب المسؤول
+                        </button>
+
+                        <a asp-controller="Admin"
+                           asp-action="Index"
+                           class="btn-cancel-admin">
+                            إلغاء
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+        <aside class="side-panel">
+            <div class="side-icon">🛡</div>
+
+            <h2>إدارة بصلاحيات واضحة</h2>
+
+            <p>
+                أضف المسؤولين الذين يحتاجون إلى الوصول للمهام الإدارية،
+                مع الحفاظ على فصل صلاحيات إدارة الحسابات عن الإدارة العادية.
+            </p>
+
+            <div class="side-feature">
+                <div class="side-feature-icon">✓</div>
+                <div>
+                    <strong>حساب مستقل لكل مسؤول</strong>
+                    <span>كل مسؤول يسجل الدخول باستخدام بياناته الخاصة.</span>
+                </div>
+            </div>
+
+            <div class="side-feature">
+                <div class="side-feature-icon">♙</div>
+                <div>
+                    <strong>صلاحية Admin</strong>
+                    <span>الحساب الجديد يحصل على دور Admin، وليس SuperAdmin.</span>
+                </div>
+            </div>
+
+            <div class="side-feature">
+                <div class="side-feature-icon">🔒</div>
+                <div>
+                    <strong>حماية لوحة الإدارة</strong>
+                    <span>إدارة حسابات المسؤولين مقتصرة على دور SuperAdmin.</span>
+                </div>
+            </div>
+
+            <div class="side-warning">
+                تنبيه أمني: استخدم كلمة مرور فريدة وقوية لكل حساب،
+                ولا تحفظ كلمات المرور في ملفات المشروع أو المستودع.
+            </div>
+        </aside>
+
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        const toggleButton = document.querySelector(".password-toggle");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleButton.textContent = "إخفاء";
+        } else {
+            passwordInput.type = "password";
+            toggleButton.textContent = "إظهار";
+        }
+    }
+</script>
+
