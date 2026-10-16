@@ -75,6 +75,8 @@ app.UseAuthorization();
     new SoapEncoderOptions(),
     SoapSerializer.DataContractSerializer);
 
+    app.MapControllers();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Student}/{action=Index}/{id?}");
