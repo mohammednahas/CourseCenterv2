@@ -2,6 +2,7 @@
 using CourseCenterv2.Application.Interfaces;
 using CourseCenterv2.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CourseCenterv2.Services;
 
@@ -10,15 +11,21 @@ public class StudentService : IStudentService
     private readonly IGenericRepository<Student> _studentRepository;
     private readonly IGenericRepository<Course> _courseRepository;
     private readonly IGenericRepository<Enrollment> _enrollmentRepository;
+    private readonly IEmailService _emailService;
+    private readonly ILogger<StudentService> _logger;
 
     public StudentService(
         IGenericRepository<Student> studentRepository,
         IGenericRepository<Course> courseRepository,
-        IGenericRepository<Enrollment> enrollmentRepository)
+        IGenericRepository<Enrollment> enrollmentRepository,
+        IEmailService emailService,
+        ILogger<StudentService> logger)
     {
         _studentRepository = studentRepository;
         _courseRepository = courseRepository;
         _enrollmentRepository = enrollmentRepository;
+        _emailService = emailService;
+        _logger = logger;
     }
 
     public async Task CreateAsync(
@@ -37,6 +44,34 @@ public class StudentService : IStudentService
 
         await _studentRepository.AddAsync(student);
         await _studentRepository.SaveChangesAsync();
+
+        try
+        {
+            await _emailService.SendEmailAsync(
+                email,
+                "Welcome to CourseCenter",
+                $"""
+                Hello {firstName} {lastName},
+
+                Welcome to CourseCenter!
+
+                Your student registration has been completed successfully.
+
+                Best regards,
+                CourseCenter Team
+                """);
+
+            _logger.LogInformation(
+                "Welcome email sent successfully to {Email}",
+                email);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to send welcome email to {Email}",
+                email);
+        }
     }
 
     public async Task DeleteAsync(int id)
@@ -82,6 +117,35 @@ public class StudentService : IStudentService
 
         await _enrollmentRepository.AddAsync(enrollment);
         await _enrollmentRepository.SaveChangesAsync();
+
+        try
+        {
+            await _emailService.SendEmailAsync(
+                student.Email,
+                "Course Enrollment Confirmation",
+                $"""
+                Hello {student.FirstName} {student.LastName},
+
+                You have been successfully enrolled in the course:
+                {course.Title}
+
+                Best regards,
+                CourseCenter Team
+                """);
+
+            _logger.LogInformation(
+                "Enrollment email sent successfully to {Email} for course {CourseTitle}",
+                student.Email,
+                course.Title);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to send enrollment email to {Email} for course {CourseTitle}",
+                student.Email,
+                course.Title);
+        }
     }
 
     public async Task<IReadOnlyList<Student?>> GetAllAsync()

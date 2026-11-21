@@ -1,0 +1,48 @@
+
+@model List<CourseCenterv2.Models.ApiPost>
+
+@{
+    ViewData["Title"] = "API Integration Demo";
+}
+
+<div class="container py-4">
+    <h1 class="mb-2">API Integration Demo</h1>
+
+    <p class="text-muted">
+       TEST
+    </p>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <div class="row g-3">
+        @foreach (var post in Model)
+        {
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">
+                            Post #@post.Id
+                        </span>
+
+                        <h5 class="card-title">
+                            @post.Title
+                        </h5>
+
+                        <p class="card-text">
+                            @post.Body
+                        </p>
+
+                        <small class="text-muted">
+                            User ID: @post.UserId
+                        </small>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
