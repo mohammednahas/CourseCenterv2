@@ -13,6 +13,7 @@
     <ProjectReference Include="../Infrastructure/CourseCenterv2.Infrastructure/CourseCenterv2.Infrastructure.csproj" />
   </ItemGroup>
    <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="16.6.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

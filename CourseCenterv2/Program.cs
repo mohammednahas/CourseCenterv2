@@ -9,6 +9,7 @@ using CourseCenterv2.Soap;
 using Microsoft.EntityFrameworkCore;
 using SoapCore;
 using Microsoft.AspNetCore.Builder;
+using CourseCenterv2.GraphQL;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,6 +54,10 @@ builder.Services.AddHttpClient<JsonPlaceholderService>(client =>
     client.Timeout = TimeSpan.FromSeconds(30);
 });
 
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<StudentQuery>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -76,6 +81,7 @@ app.UseAuthorization();
     SoapSerializer.DataContractSerializer);
 
     app.MapControllers();
+    app.MapGraphQL("/graphql");
 
 app.MapControllerRoute(
     name: "default",
